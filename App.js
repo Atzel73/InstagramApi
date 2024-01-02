@@ -1,77 +1,44 @@
 import React, { useState } from 'react';
 import { View, Text, Image, Button, TextInput, StyleSheet } from 'react-native';
-import axios from 'axios';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import { PokeSearch } from './Screens/searchPoke';
+import {DexPoke} from './Screens/pokeDex';
+
+
+  const Stack = createNativeStackNavigator();
+
+
 
 export default function App() {
-  const [poki, sendPoki] = useState('');
-  const [advice, setAdvice] = useState('');
-  const [spriteBack, setBack] = useState('');
-  const [spriteFront, setFront] = useState('');
-  const [id, setId] = useState('');
-  const [type, setType] = useState('');
-  const [abi, setAbilitie] = useState('');
-  const [error, setError] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
-  const [abilityNames, setAbilityNames] = useState([]);
-  let name;
-   
-  const getAdvice = (poki) => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${poki}`)
-      .then((response) => {
-        setAdvice(response.data.species.name);
-        setBack(response.data.sprites.back_default);
-        setFront(response.data.sprites.front_default);
-        setId(response.data.id);
-        setType(response.data.types[0].type.name);
-        setAbilitie(response.data.abilities[0].ability.name);
-        setShowDetails(true);
-        setError(null);
-        const abilities = response.data.abilities;
-
-  const names = abilities.map(a => a.ability.name);
-
-  setAbilityNames(names);
-        
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        setError('No se encontró el Pokémon');
-        setShowDetails(false);
-      });
-  };
-
   return (
+  
+
     <View style={styles.container}>
-      <TextInput
-        placeholder="search pokimon" style={styles.input} value={poki} onChangeText={(text) => sendPoki(text)}
-      />
-
-      <Button title="Get Pokimon" onPress={() => getAdvice(poki)} color="black" />
-
-      {showDetails && (
-        <View style={styles.detailsContainer}>
-          <Text style={styles.text}>El pokemon es: {advice}</Text>
-          <Text style={styles.text}>Su ID es: {id}</Text>
-          <Text style={styles.text}>Su tipo es: {type}</Text>
-          {abilityNames.map(name => <Text style={styles.text}>Su habilidad es: {name}</Text>)} 
-          <View style={styles.imageContainer}>
-            <Image style={styles.Image} source={{ uri: spriteBack }} />
-            <Image style={styles.Image} source={{ uri: spriteFront }} />
-          </View>
-
-
-
-
-          <Button title="See pokemon list!" onPress={() => alert("hola mundo")} color="black" />
-        </View>
-        
-      )}
-
-      {error && <Text style={styles.errorText}>{error}</Text>}
+  <NavigationContainer>
+      <Stack.Navigator>
+    <Stack.Screen
+      name="Search"
+      component={PokeSearch}  
+      options={{ title: 'Searching pokemon!' }}
+    />
+    <Stack.Screen
+      name="Dex"
+      component={DexPoke}  
+    />
+  </Stack.Navigator>
+    </NavigationContainer>
+    <Button title="See pokemon list!" onPress={() => {DexPoke}} color='black'></Button>
     </View>
   );
 }
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -79,37 +46,7 @@ const styles = StyleSheet.create({
     paddingTop: 22,
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  detailsContainer: {
-    marginTop: 20,
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'auto',
-  },
-  input: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 115,
-    marginTop: -195,
-  },
-  Image: {
-    width: 200,
-    height: 200,
-    marginBottom: 55,
-    marginLeft: 10,
-    marginEnd: -10,
-  },
-  imageContainer: {
-    marginTop: -25,
-    marginEnd: -25,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-    marginTop: 10,
-  },
+    backgroundColor: '#F5FCFF',
+    
+  }
 });
