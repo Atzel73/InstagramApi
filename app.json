@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "InstagramAPI",
-    "slug": "InstagramAPI",
+    "name": "PokedexAPI",
+    "slug": "pokedexAPI",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/android/drawable-xhdpi/mimi.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/R.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#25292e"
     },
     "assetBundlePatterns": [
       "**/*"

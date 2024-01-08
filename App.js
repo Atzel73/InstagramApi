@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Button, TextInput, StyleSheet } from 'react-native';
+import { View, Button,  StyleSheet } from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -24,10 +24,7 @@ export default function App() {
       component={PokeSearch}  
       options={{ title: 'Searching pokemon!' }}
     />
-    <Stack.Screen
-      name="Dex"
-      component={DexPoke}  
-    />
+    
   </Stack.Navigator>
     </NavigationContainer>
     <Button title="See pokemon list!" onPress={() => {DexPoke}} color='black'></Button>
